@@ -2,19 +2,20 @@
 require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-   // Here is the HTML formatting for our mission target div.
-   /*
-                <h2>Mission Destination</h2>
-                <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
-                    <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
-                </ol>
-                <img src="">
-   */
+    const missionTarget = document.getElementById("missionTarget")
+    missionTarget.innerHTML = `
+        <h2>Mission Destination</h2>
+        <ol>
+            <li>Name: ${name}</li>
+            <li>Diameter: ${diameter}</li>
+            <li>Star: ${star}</li>
+            <li>Distance from Earth: ${distance}</li>
+            <li>Number of Moons: ${moons}</li>
+        </ol>
+        <img src="${imageUrl}">
+        `
 }
+
 
 function validateInput(testInput) {
    if (isNaN(Number(testInput)) && testInput !== "") {
@@ -47,7 +48,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     } else {
         event.preventDefault();
         pilotStatus.innerHTML = `Pilot ${pilotValue} is ready`;
-        copilotStatus.innerHTML = `Pilot ${copilotValue} is ready`;
+        copilotStatus.innerHTML = `Co-Pilot ${copilotValue} is ready`;
         if (fuelLevelValue < 10000 && cargoLevelValue > 10000){
             list.style.visibility = "visible";
             launchStatus.style.color = "rgb(199, 37, 78)";
@@ -76,36 +77,21 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
 }
 /*
-
-<div  id="faultyItems" data-testid="faultyItems">
-                <ol>
-                    <li id="pilotStatus" data-testid="pilotStatus">Pilot Ready</li>
-                    <li id="copilotStatus" data-testid="copilotStatus">Co-pilot Ready</li>
-                    <li id="fuelStatus" data-testid="fuelStatus">Fuel level high enough for launch</li>
-                    <li id="cargoStatus" data-testid="cargoStatus">Cargo mass low enough for launch</li>
-                </ol>
-}
-formSubmission(window.document, list, "Chris", "Bob", 0, 5);
-     expect(list.style.visibility).toEqual("visible");
-     expect(h2.style.color).toEqual("rgb(199, 37, 78)");
-     expect(h2.textContent).toEqual("Shuttle Not Ready for Launch");
-     expect(pilotStatus.textContent).toEqual("Pilot Chris is ready for launch");
-      expect(copilotStatus.textContent).toEqual("Co-pilot Bob is ready for launch");
-     expect(fuelStatus.textContent).toEqual("Fuel level too low for launch");
-     expect(cargoStatus.textContent).toEqual("Cargo mass low enough for launch");
-
 */
 async function myFetch() {
-    let planetsReturned;
+    let planetsReturned = [];
 
-    planetsReturned = await fetch().then( function(response) {
-        });
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
+        return response.json()   
+    });
 
     return planetsReturned;
 }
 
 function pickPlanet(planets) {
-}
+    const pickedPlanet = planets[(Math.floor(Math.random() * planets.length))];
+    return pickedPlanet;
+ }
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
