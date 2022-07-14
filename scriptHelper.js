@@ -38,7 +38,6 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     const copilotStatus = document.getElementById("copilotStatus");
     const fuelStatus = document.getElementById("fuelStatus");
     const cargoStatus = document.getElementById("cargoStatus");
-    const tester = document.getElementById("change-for-tests");
     const launchStatus = document.getElementById("launchStatus");
     if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === ""){
         window.alert("All fields are required");
