@@ -39,7 +39,8 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     const fuelStatus = document.getElementById("fuelStatus");
     const cargoStatus = document.getElementById("cargoStatus");
     const launchStatus = document.getElementById("launchStatus");
-    if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === ""){
+    if (validateInput(pilotValue) === "Empty" || validateInput(copilotValue) === "Empty"|| 
+    validateInput(fuelLevelValue) === "Empty" || validateInput(cargoLevelValue) === "Empty"){
         window.alert("All fields are required");
         event.preventDefault();
     } else if (validateInput(pilotValue) !== "Not a Number" || validateInput(copilotValue) !== "Not a Number"|| 
@@ -56,16 +57,18 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
             launchStatus.innerHTML = "Shuttle Not Ready for Launch"
             fuelStatus.innerHTML = "Fuel level too low for launch"
             cargoStatus.innerHTML = "Cargo mass too heavy for launch"
-        } else if (fuelLevelValue < 10000) {
+        } else if (fuelLevelValue < 10000 && cargoLevelValue < 10000) {
             list.style.visibility = "visible";
             launchStatus.style.color = "rgb(199, 37, 78)";
             launchStatus.innerHTML = "Shuttle Not Ready for Launch"
             fuelStatus.innerHTML = "Fuel level too low for launch"
-        } else if (cargoLevelValue > 10000) {
+            cargoStatus.innerHTML = "Cargo mass low enough for launch";
+        } else if (cargoLevelValue > 10000 && fuelLevelValue > 10000) {
             list.style.visibility = "visible";
             launchStatus.style.color = "rgb(199, 37, 78)";
             launchStatus.innerHTML = "Shuttle Not Ready for Launch"
             cargoStatus.innerHTML = "Cargo mass too heavy for launch"
+            fuelStatus.innerHTML = "Fuel level high enough for launch";
         } else {
             list.style.visibility = "visible";
             launchStatus.style.color = "rgb(65, 159, 106)";
