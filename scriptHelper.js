@@ -40,8 +40,10 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     const cargoStatus = document.getElementById("cargoStatus");
     const tester = document.getElementById("change-for-tests");
     const launchStatus = document.getElementById("launchStatus");
-    
-    if (validateInput(pilotValue) !== "Not a Number" || validateInput(copilotValue) !== "Not a Number"|| 
+    if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === ""){
+        window.alert("All fields are required");
+        event.preventDefault();
+    } else if (validateInput(pilotValue) !== "Not a Number" || validateInput(copilotValue) !== "Not a Number"|| 
     validateInput(fuelLevelValue) !== "Is a Number" || validateInput(cargoLevelValue) !=="Is a Number")   {
         event.preventDefault();
         window.alert("Invalid inputs, re-enter.");
